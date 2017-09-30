@@ -1,17 +1,17 @@
-package handlers
+package tags
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/emostafa/jopher"
-	"github.com/ignoshi/core/store"
 )
 
-// ListTags fetches list of tags from the database and returns
+// listTags fetches list of tags from the database and returns
 // a JSON response
-func ListTags(w http.ResponseWriter, r *http.Request) {
-	tags, err := store.ListTags()
+func listTags(w http.ResponseWriter, r *http.Request) {
+	tags, err := Find()
 	if err != nil {
 		jopher.Error(w, 500, err)
 		return
@@ -20,15 +20,21 @@ func ListTags(w http.ResponseWriter, r *http.Request) {
 }
 
 // CreateTag consumes the body request to create a new Tag
-func CreateTag(w http.ResponseWriter, r *http.Request) {
-	tag := store.Tag{}
+func createTag(w http.ResponseWriter, r *http.Request) {
+	tag := New()
 	err := json.NewDecoder(r.Body).Decode(&tag)
 	if err != nil {
 		jopher.Error(w, 400, err)
 		return
 	}
 	defer r.Body.Close()
-
+	if ok, errs := tag.IsValid(); !ok {
+		for _, e := range errs {
+			log.Println(e)
+		}
+		jopher.Write(w, 400, errs)
+		return
+	}
 	err = tag.Save()
 	if err != nil {
 		jopher.Error(w, 400, err)
