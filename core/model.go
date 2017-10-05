@@ -3,6 +3,8 @@ package core
 import (
 	"errors"
 
+	"github.com/ignoshi/core/tags"
+
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -11,7 +13,7 @@ type BaseModel struct {
 	ID    bson.ObjectId `json:"id,omitempty" bson:"_id"`
 	Title string        `json:"title" bson:"title"`
 	Body  string        `json:"title" bson:"body"`
-	Tags  []string      `json:"tags" body:"tags"`
+	Tags  []tags.Tag    `json:"tags" body:"tags"`
 }
 
 // IsValid checks if model fields are valid before save
