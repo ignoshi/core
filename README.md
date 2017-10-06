@@ -4,6 +4,13 @@ Two minds are better than one. Ignoshi is your backup memory which remembers alo
 Consider Ignoshi as your friend and your manager at the same time, it will help you organize your daily life, answers
 questions you have asked before, also reminds you with stuff you forgot.
 
+#### Running Locally
+using docker compose we can run the project for local development
+
+```bash
+docker-compose up
+```
+
 #### Brain Storming
  - CRUD Global Tags
  - CRUD Code Snipptes with tags
@@ -21,9 +28,11 @@ The project will be spearated into multiple microservices, as following:
  - Ignoshi Tags (a microservice responsible for tags operations)
  - Ignoshi Snippets
  - Ignoshi Notes
- - Ignoshi FAQ
  - Ignoshi Notifications
  - Ignoshi Bookmarks
+ - Ignoshi Reader
+ - Ignoshi Calendar 
+ - Integration with gitlab/github/bitbucket issues
 
 
 #### Questions ?

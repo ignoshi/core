@@ -3,8 +3,10 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"time"
 
+	gh "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/ignoshi/core/bookmarks"
 	"github.com/ignoshi/core/snippets"
@@ -16,13 +18,15 @@ func main() {
 	tags.InjectRoutes(r.PathPrefix("/api/tags").Subrouter())
 	bookmarks.InjectRoutes(r.PathPrefix("/api/bookmarks").Subrouter())
 	snippets.InjectRoutes(r.PathPrefix("/api/snippets").Subrouter())
+	lr := gh.LoggingHandler(os.Stdout, r)
 
 	srv := &http.Server{
-		Handler:      r,
+		Handler:      lr,
 		Addr:         ":8000",
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
 
+	log.Println("Server started, Listening on :8000")
 	log.Fatal(srv.ListenAndServe())
 }
