@@ -6,14 +6,14 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/ignoshi/core/bookmarks"
 	"github.com/ignoshi/core/tags"
 )
 
 func main() {
 	r := mux.NewRouter()
 	tags.InjectRoutes(r.PathPrefix("/api/tags").Subrouter())
-	//r.HandleFunc("/api/tags", handlers.ListTags).Methods("GET")
-	//r.HandleFunc("/api/tags", handlers.CreateTag).Methods("POST")
+	bookmarks.InjectRoutes(r.PathPrefix("/api/bookmarks").Subrouter())
 
 	srv := &http.Server{
 		Handler:      r,
