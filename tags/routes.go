@@ -36,14 +36,16 @@ func createTag(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 	if ok, errs := tag.IsValid(); !ok {
+		log.Println("errors", errs)
 		for _, e := range errs {
-			log.Println(e)
+			log.Println(e.Error())
 		}
 		jopher.Write(w, 400, errs)
 		return
 	}
 	err = tag.Save()
 	if err != nil {
+		log.Println(err.Error())
 		jopher.Error(w, 400, err)
 		return
 	}

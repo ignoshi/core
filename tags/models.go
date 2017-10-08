@@ -11,9 +11,9 @@ import (
 // all other Ignoshi features.
 // All Features in Ignoshi are built around tags
 type Tag struct {
-	ID          bson.ObjectId `json:"id,omitempty" bson:"_id"`
-	Name        string        `json:"name" bson:"name"`
-	Description string        `json:"description" bson:"description"`
+	ID    bson.ObjectId `json:"id,omitempty" bson:"_id"`
+	Title string        `json:"title" bson:"title"`
+	Body  string        `json:"body" bson:"body"`
 }
 
 // New creates a new Tag object
@@ -36,13 +36,14 @@ func (t *Tag) Save() error {
 
 // IsValid checks if all tag fields are valid before save
 func (t *Tag) IsValid() (ok bool, errs []error) {
-	if t.Name == "" {
+	ok = true
+	if t.Title == "" {
 		ok = false
-		errs = append(errs, errors.New("Name is required"))
+		errs = append(errs, errors.New("Title is required"))
 	}
-	if t.Description == "" {
+	if t.Body == "" {
 		ok = false
-		errs = append(errs, errors.New("Description is required"))
+		errs = append(errs, errors.New("Body is required"))
 	}
 
 	return

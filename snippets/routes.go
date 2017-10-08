@@ -3,6 +3,7 @@ package snippets
 import (
 	"encoding/json"
 	"errors"
+	"log"
 	"net/http"
 
 	"gopkg.in/mgo.v2/bson"
@@ -35,7 +36,9 @@ func createSnippet(w http.ResponseWriter, r *http.Request) {
 		jopher.Error(w, 400, err)
 		return
 	}
-	if ok, _ := item.IsValid(); !ok {
+	log.Println("snippet", item.Title, item.Body)
+	if ok, errs := item.IsValid(); !ok {
+		log.Println("item is valid?", ok, errs)
 		jopher.Error(w, 400, errors.New("Invalid Body"))
 		return
 	}

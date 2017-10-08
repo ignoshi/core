@@ -18,6 +18,7 @@ type BaseModel struct {
 
 // IsValid checks if model fields are valid before save
 func (bm *BaseModel) IsValid() (ok bool, errs []error) {
+	ok = true
 	if bm.Title == "" {
 		ok = false
 		errs = append(errs, errors.New("Title is required"))
